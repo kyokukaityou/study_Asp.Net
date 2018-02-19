@@ -1,0 +1,131 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Javascript实现计算器</title>
+    <style type="text/css">
+        input {
+            width: 30px;
+            height: 20px;
+            text-align: center;
+        }
+
+        #tbCalculator td {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+
+    <script type="text/javascript">
+
+        var result;   //保存点击运算符之前输入框中的数值
+        var operator; //保存运算符
+        var isPressEqualsKey = false; //记录是否按下”=“键
+
+        //数字键事件
+        function connectionDigital(control) {
+            var txt = document.getElementById('txtScream');
+            if (isPressEqualsKey) {
+                txt.value = ""; //已进行过计算，则清空数值输入框重新开始
+                isPressEqualsKey = false;
+            }
+
+            //数值输入已经存在小数点,则不允许再输入小数点
+            if (txt.value.indexOf('.') > -1 && control.value == '.')
+                return false;
+            txt.value += control.value; //将控件值赋给数值输入框中
+        }
+
+        //退格键事件
+        function backspace() {
+            var txt = document.getElementById('txtScream');
+            txt.value = txt.value.substring(0, txt.value.length - 1);
+        }
+
+        //ce键事件：清空数字输入框
+        function clearAll() {
+            document.getElementById('txtScream').value = "";
+            result = "";
+            operator = "";
+        }
+
+        // +、-、*、/ 事件
+        function calculation(control) {
+            //将运算符保存入全局变量中
+            operator = control.value;
+            var txt = document.getElementById('txtScream');
+            if (txt.value == "") return false; //数值输入框中没有数字，则不能输入运算符
+            //将数值输入框中的值保存到计算表达式中
+            result = txt.value;
+            //清空输入框，以待输入操作值
+            txt.value = "";
+        }
+
+        //计算结果
+        function getResult() {
+            var opValue;
+            //计算表达式中存在运算符
+            var sourseValue = parseFloat(result);
+            var txt = document.getElementById('txtScream');
+            if (operator == '*')
+                opValue = sourseValue * parseFloat(txt.value);
+            else if (operator == '/')
+                opValue = sourseValue / parseFloat(txt.value);
+            else if (operator == '+')
+                opValue = sourseValue + parseFloat(txt.value);
+            else if (operator == '-')
+                opValue = sourseValue - parseFloat(txt.value);
+
+            txt.value = opValue;
+            isPressEqualsKey = true;
+            result = "";
+            opValue = "";
+        }
+    </script>
+</head>
+<body>
+    <table id="tbCalculator" width="200" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#0066FF">
+        <tr>
+            <td height="30" colspan="4" align="center">
+                <input type="text" name="txtScream" id="txtScream" style="width:180px; border-style:none; text-align:right;" readonly="readonly" />
+            </td>
+        </tr>
+        <tr>
+            <td height="30" colspan="2">
+                <input type="button" name="btnCE" id="btnCE" value="C&nbsp;E" style="width:80px;" align="right" ;=; onclick="clearAll();" />
+            </td>
+            <td height="30" colspan="2">
+                <input type="button" name="btn10" id="btn10" value="Backspace" style="width:80px;" align="right" ;=; onclick="backspace();" />
+            </td>
+        </tr>
+        <tr>
+            <td height="30"><input type="button" name="btn7" id="btn7" value="7" onclick="connectionDigital(this);" /></td>
+            <td><input type="button" name="btn8" id="btn8" value="8" onclick="connectionDigital(this);" /></td>
+            <td><input type="button" name="btn9" id="btn9" value="9" onclick="connectionDigital(this);" /></td>
+            <td><input type="button" name="btn6" id="btn6" value="/" onclick="calculation(this);" /></td>
+        </tr>
+        <tr>
+            <td height="30">
+                <input type="button" name="btn4" id="btn4" value="4" onclick="connectionDigital(this);" />
+            </td>
+            <td><input type="button" name="btn5" id="btn5" value="5" onclick="connectionDigital(this);" /></td>
+            <td><input type="button" name="btn6" id="btn6" value="6" onclick="connectionDigital(this);" /></td>
+            <td><input type="button" name="btn13" id="btn13" value="*" onclick="calculation(this);" /></td>
+        </tr>
+        <tr>
+            <td height="30">
+                <input type="button" name="btn1" id="btn1" value="1" onclick="connectionDigital(this);" />
+            </td>
+            <td><input type="button" name="btn2" id="btn2" value="2" onclick="connectionDigital(this);" /></td>
+            <td><input type="button" name="btn3" id="btn3" value="3" onclick="connectionDigital(this);" /></td>
+            <td><input type="button" name="btn18" id="btn18" value="-" onclick="calculation(this);" /></td>
+        </tr>
+        <tr>
+            <td height="30"><input type="button" name="btn0" id="btn0" value="0" onclick="connectionDigital(this);" /></td>
+            <td><input type="button" name="btndot" id="btndot" value="." onclick="connectionDigital(this);" /></td>
+            <td><input name="btn22" type="button" id="btn22" value="=" onclick="getResult();" /></td>
+            <td><input type="button" name="btn23" id="btn23" value="+" onclick="calculation(this);" /></td>
+        </tr>
+    </table>
+</body>
+</html>
