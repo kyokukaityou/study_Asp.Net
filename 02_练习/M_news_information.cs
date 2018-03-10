@@ -17,3 +17,7 @@ this.company_mail.InnerText = company.Rows[0][CompanyTable.MAIL].ToString();
 DataRow dr = dbt.GetDataRow(dbt.Ns_news, id);
 this.title.InnerText = dr[NewsTable.TITLE].ToString();
 this.content.InnerHtml = dr[NewsTable.CONTENT].ToString();
+
+
+
+ this.content.InnerHtml = "<img src=\"image/" + activityImg + "\" width=\"500\" height=\"300\"/>";
