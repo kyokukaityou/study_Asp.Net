@@ -1,0 +1,7 @@
+    //正则表达式
+    var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$"); 
+    if (!reg.test(inquiry_maile.value))
+    {
+        alert("メールアドレス：正しくを入力してください。（*****@**.***）");
+        return;
+    }
